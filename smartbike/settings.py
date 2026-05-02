@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'smartbike.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'smartbike_db',
+        'USER': 'root',
+        'PASSWORD': 'kendininkiniyazabilirsingörmekiçin',  # MySQL'e girerken kullandığın şifre
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
