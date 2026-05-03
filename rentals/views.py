@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required # @login_required için şart
+from .forms import UserUpdateForm # Az önce oluşturduğumuz formu içeri alıyoruz
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User # Django'nun hazır kullanıcı tablosu
@@ -37,3 +39,16 @@ def login_view(request):
 
 def home(request):
     return render(request, 'rentals/home.html')
+
+@login_required # Sadece giriş yapanlar görebilsin
+def profile_view(request):
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Hesabın başarıyla güncellendi!')
+            return redirect('profile')
+    else:
+        form = UserUpdateForm(instance=request.user)
+
+    return render(request, 'rentals/profile.html', {'form': form})
