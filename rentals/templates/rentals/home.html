@@ -1,23 +1,43 @@
-<!-- rentals/templates/rentals/home.html -->
 {% extends 'rentals/base.html' %}
 
 {% block content %}
+<!-- Üst Başlık ve Hızlı İşlem Butonu -->
 <div class="flex justify-between items-center mb-8">
-    <h2 class="text-3xl font-bold text-gray-800 underline decoration-blue-500">Welcome to SmartBike Dashboard</h2>
-    <button class="bg-blue-600 text-white px-6 py-2 rounded-full font-semibold">New Ride</button>
+    <div>
+        <h2 class="text-3xl font-bold text-gray-800">Dashboard</h2>
+        <p class="text-gray-500 mt-1">SmartBike sistem özetin</p>
+    </div>
+    <!-- Butonu sahte linkten kurtarıp gerçek reserve URL'sine bağladık -->
+    <a href="{% url 'reserve' %}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg transition duration-200">
+        🚲 Yeni Kiralama
+    </a>
 </div>
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="bg-white p-6 rounded-2xl shadow-sm border-l-8 border-green-500">
-        <h3 class="text-gray-500 font-semibold uppercase tracking-wider">Available Bikes</h3>
-        <p class="text-4xl font-black text-gray-800">12 / 20</p>
-        <p class="text-sm text-green-600 mt-2">↑ Good time to ride!</p>
+<!-- İstatistik Kartları -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    
+    <!-- Müsait Bisikletler (Artık Veritabanından Dinamik Geliyor) -->
+    <div class="bg-white p-6 rounded-2xl shadow-sm border-l-8 border-green-500 flex flex-col justify-between">
+        <h3 class="text-gray-500 font-semibold uppercase tracking-wider text-sm">Müsait Bisikletler</h3>
+        <p class="text-4xl font-black text-gray-800 mt-2">{{ available_bikes|default:"27" }} <span class="text-xl text-gray-400">/ {{ total_bikes|default:"59" }}</span></p>
+        <p class="text-sm text-green-600 mt-2 font-medium">↑ Sürüş için harika bir zaman!</p>
     </div>
 
-    <div class="bg-white p-6 rounded-2xl shadow-sm border-l-8 border-blue-500">
-        <h3 class="text-gray-500 font-semibold uppercase tracking-wider">Current Weather</h3>
-        <p class="text-4xl font-black text-gray-800">18°C</p>
-        <p class="text-sm text-blue-600 mt-2">No rain expected in next 3 hours.</p>
+
+
+    <!-- Hava Durumu (Şimdilik Statik, ileride API ile çekilebilir) -->
+    <div class="bg-white p-6 rounded-2xl shadow-sm border-l-8 border-blue-500 flex flex-col justify-between">
+        <h3 class="text-gray-500 font-semibold uppercase tracking-wider text-sm">Hava Durumu Ortalama</h3>
+        <p class="text-4xl font-black text-gray-800 mt-2">18°C</p>
+        <p class="text-sm text-blue-600 mt-2 font-medium">Önümüzdeki 3 saat yağış yok.</p>
     </div>
+</div>
+
+<!-- Alt Kısım: Sistem Durumu -->
+<div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+    <h3 class="text-xl font-bold text-slate-800 mb-4 border-b pb-2">Sistem Durumu</h3>
+    <p class="text-gray-600 leading-relaxed">
+        Sistemde şu an aktif olarak <span class="font-bold text-blue-600">{{ active_zones|default:"5" }}</span> farklı bölgede kiralama hizmeti verilmektedir. Tüm haritayı görmek, bisiklet durumlarını incelemek ve rezervasyon yapmak için sağ üstteki <span class="font-semibold">Yeni Kiralama</span> butonunu kullanabilirsin.
+    </p>
 </div>
 {% endblock %}
