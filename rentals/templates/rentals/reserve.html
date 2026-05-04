@@ -1,0 +1,96 @@
+{% extends 'rentals/base.html' %}
+
+{% block content %}
+<div class="flex flex-col md:flex-row gap-8">
+    
+<!-- SOL: Rezervasyon Formu -->
+<div class="bg-white p-6 rounded-2xl shadow-sm w-full md:w-1/3 h-fit border border-gray-100">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Reserve Bike</h2>
+    
+    <div class="space-y-4">
+        <!-- Bisiklet Tipi, Başlangıç ve Bitiş Saatleri Kaldırıldı -->
+        
+        <div>
+            <label class="block text-sm font-bold text-gray-700">Zone</label>
+            <select id="zoneSelect" class="w-full px-3 py-2 rounded-lg border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="">Select a zone...</option>
+                {% for zone in zones %}
+                    <option value="{{ zone.id }}">{{ zone.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button id="okBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition shadow-lg mt-4">
+            Show Bikes
+        </button>
+    </div>
+</div>
+
+    <!-- SAĞ: Dinamik Bisiklet Matrisi -->
+    <div class="bg-blue-50 p-6 rounded-2xl shadow-inner w-full md:w-2/3 border border-blue-100 hidden" id="bikeMatrixContainer">
+        <h3 class="text-xl font-bold text-slate-800 mb-4 border-b border-blue-200 pb-2">Available Bikes in Zone</h3>
+        
+        <!-- Bisikletlerin listeleneceği alan -->
+        <div id="bikeList" class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- JavaScript burayı dolduracak -->
+        </div>
+    </div>
+
+</div>
+
+<script>
+    document.getElementById('okBtn').addEventListener('click', function() {
+        const zoneId = document.getElementById('zoneSelect').value;
+        const container = document.getElementById('bikeMatrixContainer');
+        const bikeList = document.getElementById('bikeList');
+
+        if (!zoneId) {
+            alert("Lütfen bir bölge seçin.");
+            return;
+        }
+
+        // Fetch API ile sayfayı yenilemeden arka plandan bisikletleri çekiyoruz
+        fetch(`/api/get-bikes/?zone_id=${zoneId}`)
+            .then(response => response.json())
+            .then(data => {
+                bikeList.innerHTML = ''; // Önceki listeyi temizle
+                container.classList.remove('hidden'); // Matrisi görünür yap
+
+                data.bikes.forEach(bike => {
+                    // Duruma göre renk belirleme (Müsait: Yeşil, Rezerve: Turuncu, Alınmış: Kırmızı)
+                    let dotColor = 'bg-green-500';
+                    let cursorStyle = 'cursor-pointer hover:scale-105 hover:shadow-md';
+                    
+                    if (bike.status === 'reserved') {
+                        dotColor = 'bg-orange-500';
+                        cursorStyle = 'cursor-not-allowed opacity-75';
+                    } else if (bike.status === 'unavailable') {
+                        dotColor = 'bg-red-500';
+                        cursorStyle = 'cursor-not-allowed opacity-75';
+                    }
+
+                    // Bisiklet kartı HTML'i (Tooltip title attribute ile sağlandı)
+                    const bikeCard = `
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex items-center justify-between transition transform ${cursorStyle}" 
+                             title="Type: ${bike.bike_type} | Status: ${bike.status.toUpperCase()}"
+                             onclick="handleBikeClick(${bike.id}, '${bike.status}')">
+                            <span class="font-bold text-gray-700">${bike.bike_number}</span>
+                            <div class="w-4 h-4 rounded-full ${dotColor}"></div>
+                        </div>
+                    `;
+                    bikeList.innerHTML += bikeCard;
+                });
+            });
+    });
+
+    function handleBikeClick(bikeId, status) {
+        if (status === 'available') {
+            // Tıklandığında pop-up uyarısı
+            alert("Reserved! Redirecting to reservations part...");
+            // Burada ileride rezervasyon kaydını POST eden kodu yazacağız
+        } else {
+            alert("Bu bisiklet şu anda uygun değil.");
+        }
+    }
+</script>
+{% endblock %}

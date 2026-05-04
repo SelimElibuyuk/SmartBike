@@ -5,6 +5,26 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User # Django'nun hazır kullanıcı tablosu
 from django.contrib import messages
 
+from django.http import JsonResponse
+from .models import Zone, Bike
+from django.contrib.auth.decorators import login_required
+
+
+
+@login_required
+def reserve_view(request):
+    zones = Zone.objects.all()
+    return render(request, 'rentals/reserve.html', {'zones': zones})
+
+@login_required
+def get_bikes_api(request):
+    zone_id = request.GET.get('zone_id')
+    if zone_id:
+        # Seçilen bölgedeki bisikletleri getir
+        bikes = Bike.objects.filter(zone_id=zone_id).values('id', 'bike_number', 'bike_type', 'status')
+        return JsonResponse({'bikes': list(bikes)})
+    return JsonResponse({'error': 'Zone ID missing'}, status=400)
+
 def signup_view(request):
     if request.method == "POST":
         u = request.POST.get('username')

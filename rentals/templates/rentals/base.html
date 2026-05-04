@@ -12,14 +12,19 @@
     <!-- ASIDE (Sidebar - Her sayfada aynı kalacak) -->
     <aside class="w-64 bg-slate-800 text-white flex flex-col p-6 space-y-6">
         <h1 class="text-2xl font-bold text-blue-400">SmartBike 🚲</h1>
-        <nav class="flex-1 space-y-4">
-            <a href="{% url 'home' %}" class="block p-3 hover:bg-slate-700 rounded-lg">🏠 Home</a>
-            <a href="#" class="block p-3 hover:bg-slate-700 rounded-lg">🚲 Reserve Bike</a>
-            <a href="#" class="block p-3 hover:bg-slate-700 rounded-lg">🕒 My Reservations</a>
-            <a href="#" class="block p-3 hover:bg-slate-700 rounded-lg">📈 Smart Insights</a>
-            <a href="{% url 'profile' %}" class="block p-3 hover:bg-slate-700 rounded-lg bg-slate-700">👤 Profile</a>
-            <a href="{% url 'login' %}" class="block p-3 text-red-400 hover:bg-slate-700 rounded-lg mt-10">🚪 Logout</a>
-        </nav>
+<nav class="flex-1 space-y-4">
+    <a href="{% url 'home' %}" class="block p-3 hover:bg-slate-700 rounded-lg">🏠 Home</a>
+    
+    <!-- href="#" kısmını href="{% url 'reserve' %}" olarak değiştirdik -->
+    <a href="{% url 'reserve' %}" class="block p-3 hover:bg-slate-700 rounded-lg">🚲 Reserve Bike</a>
+    
+    <!-- Şimdilik boş kalsın, sonra rezervasyonlarım sayfasını yapacağız -->
+    <a href="#" class="block p-3 hover:bg-slate-700 rounded-lg">🕒 My Reservations</a>
+    
+    <a href="#" class="block p-3 hover:bg-slate-700 rounded-lg">📈 Smart Insights</a>
+    <a href="{% url 'profile' %}" class="block p-3 hover:bg-slate-700 rounded-lg bg-slate-700">👤 Profile</a>
+    <a href="{% url 'login' %}" class="block p-3 text-red-400 hover:bg-slate-700 rounded-lg mt-10">🚪 Logout</a>
+</nav>
         <div class="mt-auto p-4 bg-slate-900 rounded-lg text-sm text-gray-400">
             User: Rukiye (Dev)
         </div>
