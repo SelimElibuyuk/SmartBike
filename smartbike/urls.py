@@ -11,4 +11,6 @@ urlpatterns = [
     path('profile/', profile_view, name='profile'), 
     path('reserve/', views.reserve_view, name='reserve'), 
     path('api/get-bikes/', views.get_bikes_api, name='get_bikes_api'),
+    path('insights/', views.insights_view, name='insights'),
+    path('api/reserve/<int:bike_id>/', views.reserve_bike_action, name='reserve_bike_action'),
 ]

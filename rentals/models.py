@@ -41,3 +41,18 @@ class Reservation(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.bike.bike_number} ({self.status})"
+
+class RentalsDemanddata(models.Model):
+    # timestamp alanını primary_key=True yaparak Django'nun hata vermesini engelliyoruz
+    timestamp = models.TextField(primary_key=True) 
+    zone = models.TextField(blank=True, null=True)
+    is_weekend = models.IntegerField(blank=True, null=True)
+    temperature_c = models.FloatField(blank=True, null=True)
+    rain_mm = models.FloatField(blank=True, null=True)
+    event_score = models.FloatField(blank=True, null=True)
+    commute_index = models.FloatField(blank=True, null=True)
+    bike_demand = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = True  # Bunu True yapalım ki Django tabloyu tam kontrol edebilsin
+        db_table = 'rentals_demanddata'
