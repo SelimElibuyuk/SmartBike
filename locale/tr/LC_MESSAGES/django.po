@@ -1,0 +1,168 @@
+# Turkish translations for SmartBike
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: tr\n"
+
+msgid "Home"
+msgstr "Ana Sayfa"
+
+msgid "Reserve Bike"
+msgstr "Bisiklet Kirala"
+
+msgid "My Reservations"
+msgstr "Rezervasyonlarım"
+
+msgid "Smart Insights"
+msgstr "Akıllı Analiz"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Logout"
+msgstr "Çıkış"
+
+msgid "User"
+msgstr "Kullanıcı"
+
+msgid "Welcome to SmartBike Dashboard"
+msgstr "SmartBike Paneline Hoş Geldiniz"
+
+msgid "New Ride"
+msgstr "Yeni Sürüş"
+
+msgid "Available Bikes"
+msgstr "Müsait Bisikletler"
+
+msgid "↑ Good time to ride!"
+msgstr "↑ Sürüş için iyi bir zaman!"
+
+msgid "↓ All bikes are currently in use."
+msgstr "↓ Tüm bisikletler şu an kullanımda."
+
+msgid "Average City Temp"
+msgstr "Ortalama Şehir Sıcaklığı"
+
+msgid "Based on 2025 Smart Insights data."
+msgstr "2025 Akıllı Analiz verilerine dayanmaktadır."
+
+msgid "Quick Links"
+msgstr "Hızlı Bağlantılar"
+
+msgid "View Trends"
+msgstr "Trendleri Görüntüle"
+
+msgid "My Profile"
+msgstr "Profilim"
+
+msgid "City-wide bike demand analysis based on 2025 dataset."
+msgstr "2025 veri setine dayalı şehir geneli bisiklet talep analizi."
+
+msgid "Average Demand"
+msgstr "Ortalama Talep"
+
+msgid "bikes/hr"
+msgstr "bisiklet/saat"
+
+msgid "Peak Demand"
+msgstr "Zirve Talep"
+
+msgid "bikes"
+msgstr "bisiklet"
+
+msgid "Avg Temperature"
+msgstr "Ort. Sıcaklık"
+
+msgid "Update Profile"
+msgstr "Profili Güncelle"
+
+msgid "Save Changes"
+msgstr "Değişiklikleri Kaydet"
+
+msgid "Cancel"
+msgstr "Vazgeç"
+
+msgid "Select Operation Zone"
+msgstr "Bölge Seçin"
+
+msgid "Choose a location..."
+msgstr "Konum seçin..."
+
+msgid "Show Available Bikes"
+msgstr "Müsait Bisikletleri Göster"
+
+msgid "Available Bikes in Zone"
+msgstr "Bölgedeki Müsait Bisikletler"
+
+msgid "Found"
+msgstr "Bulundu"
+
+msgid "No bikes found in this zone."
+msgstr "Bu bölgede bisiklet bulunamadı."
+
+msgid "Confirm Reservation"
+msgstr "Rezervasyonu Onayla"
+
+msgid "Do you want to reserve this bike?"
+msgstr "Bu bisikleti rezerve etmek istiyor musunuz?"
+
+msgid "Yes, Reserve"
+msgstr "Evet, Rezerve Et"
+
+msgid "Please select a zone."
+msgstr "Lütfen bir bölge seçin."
+
+msgid "Reserve Bike #"
+msgstr "Bisiklet #"
+
+msgid "This bike is currently unavailable."
+msgstr "Bu bisiklet şu anda uygun değil."
+
+msgid "Login"
+msgstr "Giriş"
+
+msgid "Welcome back, Engineer!"
+msgstr "Tekrar hoş geldiniz, Mühendis!"
+
+msgid "Username"
+msgstr "Kullanıcı Adı"
+
+msgid "Password"
+msgstr "Şifre"
+
+msgid "Log In"
+msgstr "Giriş Yap"
+
+msgid "Don't have an account?"
+msgstr "Hesabınız yok mu?"
+
+msgid "Sign Up"
+msgstr "Kayıt Ol"
+
+msgid "Join SmartBike"
+msgstr "SmartBike'a Katıl"
+
+msgid "Create your engineer account"
+msgstr "Mühendis hesabınızı oluşturun"
+
+msgid "Create Account"
+msgstr "Hesap Oluştur"
+
+msgid "Already have an account?"
+msgstr "Zaten hesabınız var mı?"
+
+msgid "Active"
+msgstr "Aktif"
+
+msgid "Completed"
+msgstr "Tamamlandı"
+
+msgid "Cancelled"
+msgstr "İptal Edildi"
+
+msgid "You haven't made any reservations yet."
+msgstr "Henüz hiç rezervasyon yapmadınız."
+
+msgid "Reserve a Bike Now"
+msgstr "Şimdi Bisiklet Kirala"

@@ -28,10 +28,9 @@ class Reservation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reservations')
     bike = models.ForeignKey(Bike, on_delete=models.CASCADE, related_name='reservations')
     start_time = models.DateTimeField(default=timezone.now)
-    end_time = models.DateTimeField()
+    end_time = models.DateTimeField(null=True, blank=True)  # ← null=True ekle
     created_at = models.DateTimeField(auto_now_add=True)
     
-    # Rezervasyon aktif mi, bitti mi yoksa iptal mi edildi?
     STATUS_CHOICES = (
         ('active', 'Active'),
         ('completed', 'Completed'),
@@ -44,7 +43,7 @@ class Reservation(models.Model):
 
 class RentalsDemanddata(models.Model):
     # timestamp alanını primary_key=True yaparak Django'nun hata vermesini engelliyoruz
-    timestamp = models.TextField(primary_key=True) 
+    timestamp = models.DateTimeField(primary_key=True) 
     zone = models.TextField(blank=True, null=True)
     is_weekend = models.IntegerField(blank=True, null=True)
     temperature_c = models.FloatField(blank=True, null=True)

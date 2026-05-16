@@ -1,43 +1,64 @@
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE }}">
 
 <head>
     <meta charset="UTF-8">
-    <title>SmartBike | Login</title>
+    <title>SmartBike | {% trans "Login" %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-slate-900 flex items-center justify-center h-screen">
+
+    <!-- Language Switcher -->
+    {% get_current_language as LANGUAGE_CODE %}
+    <form action="{% url 'set_language' %}" method="post" class="absolute top-4 right-6">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ request.path }}">
+        {% if LANGUAGE_CODE == 'tr' %}
+            <input name="language" type="hidden" value="en">
+            <button type="submit" class="bg-slate-800 hover:bg-slate-700 text-white text-sm px-4 py-2 rounded-lg shadow transition">
+                🇬🇧 English
+            </button>
+        {% else %}
+            <input name="language" type="hidden" value="tr">
+            <button type="submit" class="bg-slate-800 hover:bg-slate-700 text-white text-sm px-4 py-2 rounded-lg shadow transition">
+                🇹🇷 Türkçe
+            </button>
+        {% endif %}
+    </form>
+
     <div class="bg-white p-10 rounded-3xl shadow-2xl w-96">
         <h1 class="text-3xl font-black text-center text-slate-800 mb-2">SmartBike 🚲</h1>
-        <p class="text-gray-500 text-center mb-8">Welcome back, Engineer!</p>
+        <p class="text-gray-500 text-center mb-8">{% trans "Welcome back, Engineer!" %}</p>
+
         {% if messages %}
-        {% for message in messages %}
-        <div class="bg-red-100 text-red-700 p-3 rounded-lg mb-4 text-sm font-bold">
-            {{ message }}
-        </div>
-        {% endfor %}
+            {% for message in messages %}
+            <div class="bg-red-100 text-red-700 p-3 rounded-lg mb-4 text-sm font-bold">
+                {{ message }}
+            </div>
+            {% endfor %}
         {% endif %}
+
         <form method="POST" class="space-y-4">
-            {% csrf_token %} <div>
-                <label class="block text-sm font-bold text-gray-700">Username</label>
+            {% csrf_token %}
+            <div>
+                <label class="block text-sm font-bold text-gray-700">{% trans "Username" %}</label>
                 <input type="text" name="username" required class="...">
             </div>
             <div>
-                <label class="block text-sm font-bold text-gray-700">Password</label>
+                <label class="block text-sm font-bold text-gray-700">{% trans "Password" %}</label>
                 <input type="password" name="password" required class="...">
             </div>
-
             <button type="submit"
                 class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-blue-200">
-                Log In
+                {% trans "Log In" %}
             </button>
         </form>
 
         <p class="text-center text-sm text-gray-500 mt-6">
-            Don't have an account? <a href="{% url 'signup' %}" class="text-blue-600 font-bold">Sign Up</a>
+            {% trans "Don't have an account?" %} <a href="{% url 'signup' %}" class="text-blue-600 font-bold">{% trans "Sign Up" %}</a>
         </p>
     </div>
 </body>
-
 </html>

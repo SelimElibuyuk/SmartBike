@@ -1,16 +1,17 @@
 {% extends 'rentals/base.html' %}
 
 {% block content %}
+{% load i18n %}
 <div class="flex flex-col md:flex-row gap-8 relative">
     
     <div class="bg-white p-6 rounded-2xl shadow-sm w-full md:w-1/3 h-fit border border-gray-100">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6 font-sans">Reserve Bike</h2>
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 font-sans">{% trans "Reserve Bike" %}</h2>
         
         <div class="space-y-4">
             <div>
-                <label class="block text-sm font-bold text-gray-600 mb-2">Select Operation Zone</label>
+                <label class="block text-sm font-bold text-gray-600 mb-2">{% trans "Select Operation Zone" %}</label>
                 <select id="zoneSelect" class="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-gray-50 cursor-pointer">
-                    <option value="">Choose a location...</option>
+                    <option value="">{% trans "Choose a location..." %}</option>
                     {% for zone in zones %}
                         <option value="{{ zone.id }}">{{ zone.name }}</option>
                     {% endfor %}
@@ -18,21 +19,21 @@
             </div>
 
             <button id="okBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-blue-200 mt-4 active:scale-95">
-                🔍 Show Available Bikes
+                🔍 {% trans "Show Available Bikes" %}
             </button>
         </div>
     </div>
 
     <div class="bg-blue-50 p-6 rounded-2xl shadow-inner w-full md:w-2/3 border border-blue-100 hidden min-h-[300px]" id="bikeMatrixContainer">
         <div class="flex items-center justify-between mb-6 border-b border-blue-200 pb-4">
-            <h3 class="text-xl font-bold text-slate-800">Available Bikes in Zone</h3>
-            <span id="bikeCount" class="bg-blue-600 text-white text-xs px-3 py-1 rounded-full font-bold">0 Found</span>
+            <h3 class="text-xl font-bold text-slate-800">{% trans "Available Bikes in Zone" %}</h3>
+            <span id="bikeCount" class="bg-blue-600 text-white text-xs px-3 py-1 rounded-full font-bold">0 {% trans "Found" %}</span>
         </div>
         
         <div id="bikeList" class="grid grid-cols-2 lg:grid-cols-3 gap-4"></div>
 
         <div id="emptyState" class="hidden text-center py-12">
-            <p class="text-blue-400 font-medium italic">No bikes found in this zone.</p>
+            <p class="text-blue-400 font-medium italic">{% trans "No bikes found in this zone." %}</p>
         </div>
     </div>
 
@@ -44,15 +45,15 @@
             <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 mb-4">
                 <span class="text-2xl">🚲</span>
             </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2">Confirm Reservation</h3>
-            <p class="text-gray-500 mb-6" id="modalText">Do you want to reserve this bike?</p>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">{% trans "Confirm Reservation" %}</h3>
+            <p class="text-gray-500 mb-6" id="modalText">{% trans "Do you want to reserve this bike?" %}</p>
             
             <div class="flex gap-3">
                 <button id="cancelBtn" class="flex-1 px-4 py-3 bg-gray-100 text-gray-600 font-bold rounded-xl hover:bg-gray-200 transition">
-                    Cancel
+                    {% trans "Cancel" %}
                 </button>
                 <button id="confirmBtn" class="flex-1 px-4 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 shadow-lg transition">
-                    Yes, Reserve
+                    {% trans "Yes, Reserve" %}
                 </button>
             </div>
         </div>
@@ -60,9 +61,15 @@
 </div>
 
 <script>
+    const translations = {
+        pleaseSelectZone: "{% trans 'Please select a zone.' %}",
+        found: "{% trans 'Found' %}",
+        bikeReserveConfirm: "{% trans 'Reserve Bike #' %}",
+        bikeUnavailable: "{% trans 'This bike is currently unavailable.' %}",
+    };
+
     let selectedBikeId = null;
 
-    // Bisikletleri Çekme
     document.getElementById('okBtn').addEventListener('click', function() {
         const zoneId = document.getElementById('zoneSelect').value;
         const container = document.getElementById('bikeMatrixContainer');
@@ -71,7 +78,7 @@
         const emptyState = document.getElementById('emptyState');
 
         if (!zoneId) {
-            alert("Lütfen bir bölge seçin.");
+            alert(translations.pleaseSelectZone);
             return;
         }
 
@@ -83,10 +90,10 @@
                 
                 if (data.bikes.length === 0) {
                     emptyState.classList.remove('hidden');
-                    bikeCountLabel.innerText = "0 Found";
+                    bikeCountLabel.innerText = `0 ${translations.found}`;
                 } else {
                     emptyState.classList.add('hidden');
-                    bikeCountLabel.innerText = `${data.bikes.length} Found`;
+                    bikeCountLabel.innerText = `${data.bikes.length} ${translations.found}`;
 
                     data.bikes.forEach(bike => {
                         let dotColor = 'bg-green-500';
@@ -115,14 +122,13 @@
             });
     });
 
-    // Modal Açma
     function handleBikeClick(bikeId, status, bikeNumber) {
         if (status === 'available') {
             selectedBikeId = bikeId;
             const modal = document.getElementById('reserveModal');
             const modalContent = document.getElementById('modalContent');
             
-            document.getElementById('modalText').innerText = `Bike #${bikeNumber} rezerve edilsin mi?`;
+            document.getElementById('modalText').innerText = `${translations.bikeReserveConfirm}${bikeNumber}?`;
             modal.classList.remove('hidden');
             
             setTimeout(() => {
@@ -130,11 +136,10 @@
                 modalContent.classList.add('scale-100', 'opacity-100');
             }, 10);
         } else {
-            alert("Bu bisiklet şu anda uygun değil.");
+            alert(translations.bikeUnavailable);
         }
     }
 
-    // Modal Kapatma
     function closeModal() {
         const modal = document.getElementById('reserveModal');
         const modalContent = document.getElementById('modalContent');
@@ -144,7 +149,6 @@
 
     document.getElementById('cancelBtn').addEventListener('click', closeModal);
 
-    // Rezervasyon Onay
     document.getElementById('confirmBtn').addEventListener('click', function() {
         if (selectedBikeId) {
             fetch(`/api/reserve/${selectedBikeId}/`)
@@ -152,13 +156,12 @@
                 .then(data => {
                     if (data.status === 'success') {
                         closeModal();
-                        document.getElementById('okBtn').click(); // Listeyi güncelle
+                        document.getElementById('okBtn').click();
                     }
                 });
         }
     });
 
-    // Dışarı tıklayınca kapatma (Bonus)
     document.getElementById('reserveModal').addEventListener('click', function(e) {
         if (e.target === this) closeModal();
     });

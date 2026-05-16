@@ -1,0 +1,45 @@
+{% extends 'rentals/base.html' %}
+
+{% block content %}
+{% load i18n %}
+<div class="space-y-6">
+    <h2 class="text-3xl font-bold text-gray-800 underline decoration-blue-500 decoration-4 underline-offset-8">
+        🕒 {% trans "My Reservations" %}
+    </h2>
+
+    {% if reservations %}
+    <div class="space-y-4">
+        {% for r in reservations %}
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+            <div class="flex items-center gap-6">
+                <div class="text-4xl">🚲</div>
+                <div>
+                    <p class="text-lg font-black text-gray-800">#{{ r.bike.bike_number }} — {{ r.bike.zone.name }}</p>
+                    <p class="text-sm text-gray-400 mt-1">{{ r.bike.bike_type }}</p>
+                    <p class="text-xs text-gray-400 mt-1">{{ r.created_at|date:"d M Y, H:i" }}</p>
+                </div>
+            </div>
+            <div>
+                {% if r.status == 'active' %}
+                    <span class="bg-orange-100 text-orange-600 text-xs font-bold px-4 py-2 rounded-full">{% trans "Active" %}</span>
+                {% elif r.status == 'completed' %}
+                    <span class="bg-green-100 text-green-600 text-xs font-bold px-4 py-2 rounded-full">{% trans "Completed" %}</span>
+                {% elif r.status == 'cancelled' %}
+                    <span class="bg-red-100 text-red-600 text-xs font-bold px-4 py-2 rounded-full">{% trans "Cancelled" %}</span>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+    <div class="bg-white p-12 rounded-2xl shadow-sm border border-gray-100 text-center">
+        <p class="text-5xl mb-4">🚲</p>
+        <p class="text-gray-500 font-medium">{% trans "You haven't made any reservations yet." %}</p>
+        <a href="{% url 'reserve' %}" class="mt-6 inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl transition">
+            {% trans "Reserve a Bike Now" %}
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

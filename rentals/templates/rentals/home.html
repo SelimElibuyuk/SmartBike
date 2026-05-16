@@ -1,45 +1,46 @@
 {% extends 'rentals/base.html' %}
+{% load i18n %}
 
 {% block content %}
 <div class="flex justify-between items-center mb-8">
-    <h2 class="text-3xl font-bold text-gray-800 underline decoration-blue-500 decoration-4 underline-offset-8">Welcome to SmartBike Dashboard</h2>
+    <h2 class="text-3xl font-bold text-gray-800 underline decoration-blue-500 decoration-4 underline-offset-8">{% trans "Welcome to SmartBike Dashboard" %}</h2>
     <a href="{% url 'reserve' %}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-bold transition shadow-lg shadow-blue-100">
-        New Ride
+        {% trans "New Ride" %}
     </a>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="bg-white p-6 rounded-2xl shadow-sm border-l-8 border-green-500">
-        <h3 class="text-gray-500 font-semibold uppercase tracking-wider text-sm">Available Bikes</h3>
+        <h3 class="text-gray-500 font-semibold uppercase tracking-wider text-sm">{% trans "Available Bikes" %}</h3>
         <p class="text-4xl font-black text-gray-800 mt-2">
             {{ available_bikes }} / {{ total_bikes }}
         </p>
         <p class="text-sm text-green-600 mt-2 font-medium">
             {% if available_bikes > 0 %}
-                ↑ Good time to ride!
+                {% trans "↑ Good time to ride!" %}
             {% else %}
-                ↓ All bikes are currently in use.
+                {% trans "↓ All bikes are currently in use." %}
             {% endif %}
         </p>
     </div>
 
     <div class="bg-white p-6 rounded-2xl shadow-sm border-l-8 border-blue-500">
-        <h3 class="text-gray-500 font-semibold uppercase tracking-wider text-sm">Average City Temp</h3>
+        <h3 class="text-gray-500 font-semibold uppercase tracking-wider text-sm">{% trans "Average City Temp" %}</h3>
         <p class="text-4xl font-black text-gray-800 mt-2">{{ avg_temp }}°C</p>
-        <p class="text-sm text-blue-600 mt-2 font-medium italic">Based on 2025 Smart Insights data.</p>
+        <p class="text-sm text-blue-600 mt-2 font-medium italic">{% trans "Based on 2025 Smart Insights data." %}</p>
     </div>
 </div>
 
 <div class="mt-12">
-    <h3 class="text-xl font-bold text-gray-700 mb-4">Quick Links</h3>
+    <h3 class="text-xl font-bold text-gray-700 mb-4">{% trans "Quick Links" %}</h3>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <a href="{% url 'insights' %}" class="bg-white p-4 rounded-xl text-center shadow-sm hover:shadow-md transition border border-gray-100">
             <span class="block text-2xl mb-1">📈</span>
-            <span class="text-sm font-bold text-gray-600">View Trends</span>
+            <span class="text-sm font-bold text-gray-600">{% trans "View Trends" %}</span>
         </a>
         <a href="{% url 'profile' %}" class="bg-white p-4 rounded-xl text-center shadow-sm hover:shadow-md transition border border-gray-100">
             <span class="block text-2xl mb-1">👤</span>
-            <span class="text-sm font-bold text-gray-600">My Profile</span>
+            <span class="text-sm font-bold text-gray-600">{% trans "My Profile" %}</span>
         </a>
     </div>
 </div>

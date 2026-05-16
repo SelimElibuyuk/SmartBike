@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from django.utils.translation import gettext_lazy as _
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,8 +27,17 @@ SECRET_KEY = 'django-insecure-0^)23e$&5jvq#f%%vn(fnh&zkstwbxm(*oab+v!v+zibgl$1pc
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+USE_I18N = True
 
 ALLOWED_HOSTS = []
+
+LANGUAGES = [
+    ('en', _('English')),
+    ('tr', _('Türkçe')),
+]
+
+LOCALE_PATHS = [BASE_DIR / 'locale']
+
 
 
 # Application definition
@@ -43,12 +55,14 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',  # ← Add this line here
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'smartbike.urls'
 
@@ -78,7 +92,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'smartbike_db',
         'USER': 'root',           # Change 'admin' to 'root'
-        'PASSWORD': 'r2n0u048',   # Use your actual MySQL password here
+        'PASSWORD': 'Selim11+',   # Use your actual MySQL password here
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }

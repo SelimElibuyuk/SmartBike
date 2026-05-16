@@ -5,9 +5,12 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg, Max
 from django.http import JsonResponse
+from django.utils.translation import get_language
 
 from .forms import UserUpdateForm 
 from .models import RentalsDemanddata, Zone, Bike
+from django.utils import timezone
+from .models import RentalsDemanddata, Zone, Bike, Reservation
 
 # --- Ana Sayfa ---
 # rentals/views.py
@@ -90,6 +93,7 @@ def profile_view(request):
 
 # --- Akıllı Analizler (Insights) ---
 def insights_view(request):
+    print("CURRENT LANGUAGE:", get_language())
     avg_demand = RentalsDemanddata.objects.aggregate(Avg('bike_demand'))['bike_demand__avg']
     max_demand = RentalsDemanddata.objects.aggregate(Max('bike_demand'))['bike_demand__max']
     avg_temp = RentalsDemanddata.objects.aggregate(Avg('temperature_c'))['temperature_c__avg']
@@ -104,8 +108,25 @@ def insights_view(request):
 def reserve_bike_action(request, bike_id):
     try:
         bike = Bike.objects.get(id=bike_id, status='available')
-        bike.status = 'reserved' # Durumu güncelliyoruz
+        bike.status = 'reserved'
         bike.save()
+        
+        # Rezervasyon kaydı oluştur
+        Reservation.objects.create(
+            user=request.user,
+            bike=bike,
+            start_time=timezone.now(),
+        )
+        
         return JsonResponse({'status': 'success'})
     except Bike.DoesNotExist:
         return JsonResponse({'status': 'error', 'message': 'Bike not available'}, status=400)
+
+# --- Rezervasyon Geçmişi ---
+@login_required
+def my_reservations_view(request):
+    reservations = Reservation.objects.filter(
+        user=request.user
+    ).select_related('bike', 'bike__zone').order_by('-created_at')
+    
+    return render(request, 'rentals/my_reservations.html', {'reservations': reservations})
