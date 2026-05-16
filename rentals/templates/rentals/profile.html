@@ -1,9 +1,9 @@
-<!-- rentals/templates/rentals/profile.html -->
 {% extends 'rentals/base.html' %}
 
 {% block content %}
+{% load i18n %}
 <div class="max-w-2xl bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
-    <h2 class="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-4">👤 Profil Bilgilerini Güncelle</h2>
+    <h2 class="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-4">👤 {% trans "Update Profile" %}</h2>
     
     <form method="POST" class="space-y-6">
         {% csrf_token %}
@@ -22,10 +22,10 @@
 
         <div class="pt-4 flex space-x-4">
             <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl transition duration-200 shadow-md">
-                💾 Değişiklikleri Kaydet
+                💾 {% trans "Save Changes" %}
             </button>
             <a href="{% url 'home' %}" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 px-8 rounded-xl transition duration-200">
-                Vazgeç
+                {% trans "Cancel" %}
             </a>
         </div>
     </form>
