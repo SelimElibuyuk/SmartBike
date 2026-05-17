@@ -2,8 +2,15 @@
 {% load i18n %}
 
 {% block content %}
-<div class="flex justify-between items-center mb-8">
-    <h2 class="text-3xl font-bold text-gray-800 underline decoration-blue-500 decoration-4 underline-offset-8">{% trans "Welcome to SmartBike Dashboard" %}</h2>
+<div class="flex justify-between items-end mb-8">
+    <div>
+        <h1 class="text-4xl font-black text-gray-900 tracking-tight">
+            {% trans "Dashboard" %}
+        </h1>
+        <p class="text-gray-500 mt-1 font-medium text-lg">
+            {% trans "Welcome to SmartBike Dashboard" %}
+        </p>
+    </div>
     <a href="{% url 'reserve' %}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-bold transition shadow-lg shadow-blue-100">
         {% trans "New Ride" %}
     </a>

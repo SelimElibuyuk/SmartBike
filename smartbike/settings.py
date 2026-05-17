@@ -92,7 +92,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'smartbike_db',
         'USER': 'root',           # Change 'admin' to 'root'
-        'PASSWORD': 'Selim11+',   # Use your actual MySQL password here
+        'PASSWORD': 'r2n0u048',   # Use your actual MySQL password here
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
